@@ -1,7 +1,13 @@
 Controller = require 'controllers/base/controller'
-DashboardsView = require 'views/dashboards'
-
+DashboardsList = require 'views/dashboards'
+DashboardView = require 'views/dashboards/view'
+Dashboard = require 'models/dashboard'
 
 module.exports = class DashboardsController extends Controller
   index: ->
-    @view = new DashboardsView region: 'main' 
+    @view = new DashboardsList region: 'main' 
+
+  show: (params)->
+    dashboard = new  Dashboard({id:params.id})
+    @view = new DashboardView({model:dashboard})
+    dashboard.fetch(); 
