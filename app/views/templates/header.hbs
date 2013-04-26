@@ -1,12 +1,9 @@
 <div class="navbar-inner">
 	<div class="container">
 		<ul class="nav">
-			<li class="active"><a href="#">Home</a></li>
-			<li><a href="#">Projects</a></li>
-			<li><a href="#">Services</a></li>
-			<li><a href="#">Downloads</a></li>
-			<li><a href="#">About</a></li>
-			<li><a href="#">Contact</a></li>
+			{{#each items}}
+			<li><a href="{{href}}" data-search="{{search}}">{{title}}</a></li>
+			{{/each}}
 		</ul>
 	</div>
 </div>
