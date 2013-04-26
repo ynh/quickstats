@@ -23,6 +23,7 @@ module.exports = class Widget
 	render:->
 		console.log @
 		@$el=$("<div/>")
+		@$el.addClass("widget")
 		if not @inEditMode
 			if @template?
 				@$el.append(@template(@item))
@@ -34,3 +35,6 @@ module.exports = class Widget
 			else
 				@$el.append("No Edit Template")
 		@$el
+
+	run:->
+		false

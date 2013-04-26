@@ -12,5 +12,7 @@ module.exports = class DashboardView extends PageView
   render:->
     super
     Dashengine  = require 'lib/dashengine/dashengine'
-    @de=new Dashengine(@$el.find("#engine"),@model.get('_widgets'))
-    @de.render()
+    container = @$el.find("#engine")
+    @de=new Dashengine(container,@model.get('_widgets'))
+    @de.render() 
+    @de.run() 

@@ -14,5 +14,10 @@ module.exports = class Dashengine
 		for widget in @widgets
 			@$el.append( widget.render())
 
+	run:()->
+		for widget in @widgets
+			widget.run()
+		return
+
 
 	
