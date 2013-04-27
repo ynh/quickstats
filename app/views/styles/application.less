@@ -103,19 +103,42 @@ padding:0;
   fill: steelblue;
 }
 
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+circle{
+  fill: steelblue;
+  stroke: white;
+  stroke-width: 1.5px;
+
+}
 .x.axis path {
   display: none;
 }
 #engine .well{
 	margin-bottom: 10px;
 }
-.editbtn{
+.editbtn, .clone{
 	    position: absolute;
     right: 5px;
     top: 5px;
     display:none;
 }
+.clone{
 
+ right: 70px;
+  }
 .well:hover .editbtn{
 display: block;
-	}
+  }
+
+.well:hover .clone{
+display: block;
+  }
+
+.well h3{
+  margin-top: -6px;
+}

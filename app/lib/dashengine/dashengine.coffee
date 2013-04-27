@@ -22,13 +22,28 @@ module.exports = class Dashengine
 		return
 
 	replace:(old,newdata)->
-		widget = require "lib/dashengine/widgets/#{newdata.wthandler}" 
-		old.$el.empty()
-		w = new widget(newdata,@widgettypes,@datasources,old.$el)
+		widget = require "lib/dashengine/widgets/#{newdata.wthandler}"
+		el = null
+		if old?
+			el = old.$el
+			old.$el.empty()
+			w = new widget(newdata,@widgettypes,@datasources,el)
+		else
+			w = new widget(newdata,@widgettypes,@datasources	)
+		
 		w.parent = @
 		@widgets.push(w)
-		w.render()
-		w.run()
+		
+		if not old?
+			newel = w.render()
+			@$el.append(newel)
+			alert("added")
+			w.run()
+			newel.trigger("ss-added")
+		else
+			w.render()
+			w.run()
+		
 		$("#engine").trigger("ss-rearrange")
 
 

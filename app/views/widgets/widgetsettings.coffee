@@ -19,7 +19,10 @@ module.exports = class WidgetSettingsView extends View
     settings = @Widgettypes.settings
     data = {}
     for field in settings
-      data[field.name]=@$el.find("""[name="#{field.name}"]""").val()
+      if field.checkbox?
+        data[field.name] = if @$el.find("""[name="#{field.name}"]""").is(':checked') then "1" else ""
+      else
+        data[field.name]=@$el.find("""[name="#{field.name}"]""").val()
     @model.set('settings',data,{silent: true})
     return
 
@@ -33,7 +36,12 @@ module.exports = class WidgetSettingsView extends View
         setting.value= setting.default
       if data? and data[setting.name]?
         setting.value= data[setting.name]
+      if setting.value=="1"
+        setting.checked = "checked"
+      else
+        setting.checked = ""
+
       setting
     console.log compliedform
-    el.html(layoutedit({fields: compliedform,checked:()->if @value=="1" then "checked" else ""}))
+    el.html(layoutedit({fields: compliedform}))
     el.css({"margin-left": "-30px"})

@@ -22,7 +22,7 @@ module.exports = class Widget
 			@$el=$("<li/>")
 		else
 			@$el.empty()
-
+		@$el.data("controller",@)
 		size = 2
 		if @settings?.size?
 			size = parseInt(@settings.size)
@@ -34,16 +34,20 @@ module.exports = class Widget
 		else
 			@$el.append("No Template")
 		
-
-		if not @inEditMode
-			@$el.find(".well").prepend("""<a class="btn btn-success btn-small editbtn" ><i class="icon-pencil"></i> Edit</a>""")
-		else
-			@$el.find(".well").prepend("""<a class="btn btn-success btn-small editbtn" ><i class="icon-pencil"></i> Save</a>""")
+		@$el.find(".well").prepend("""<a class="btn btn-success btn-small editbtn" ><i class="icon-pencil"></i> Edit</a>""")
+		@$el.find(".well").prepend("""<a class="btn btn-small clone" ><i class="icon-pencil"></i> Clone</a>""")
 		self=@
 		@$el.find(".well").delegate '.editbtn','click', ()->self.edit()
+
+		@$el.find(".well").delegate '.clone','click', ()-> self.copyelement()
 		@$el
 	run:->
 		false
+	copyelement:()->
+		self=@
+		$.get "#{config.api.versionRoot}/clonewidgets/#{@item.id}",
+				(data) ->
+					self.parent.replace null,data
 	reload:->
 		self=@
 		$.get "#{config.api.versionRoot}/widget/#{@item.id}",
