@@ -22,8 +22,12 @@ module.exports = class Widget
 
 	render:->
 		console.log @
-		@$el=$("<div/>")
-		@$el.addClass("widget")
+		@$el=$("<li/>")
+		size = 2
+		if @settings?.size?
+			size = @settings.size
+		@$el.attr('data-ss-colspan',size)
+		#@$el.addClass("widget well span#{size}")
 		if not @inEditMode
 			if @template?
 				@$el.append(@template(@item))

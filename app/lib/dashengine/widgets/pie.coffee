@@ -13,8 +13,8 @@ module.exports = class Pie extends Widget
 		  oranges: [200, 200, 200, 200, 200]
 			}
 
-		width = 300
-		height = 300
+		width = @$el.width()-100
+		height = @$el.width()-100
 		radius = Math.min(width, height) / 2;
 
 		color = d3.scale.category20()
@@ -23,11 +23,10 @@ module.exports = class Pie extends Widget
 		    .sort(null);
 
 		arc = d3.svg.arc()
-		    .innerRadius(radius - 100)
-		    .outerRadius(radius - 20) 
+		    .innerRadius((radius)*0.5)
+		    .outerRadius(radius ) 
 
-		console.log d3.select("#pie#{@item.id}")
-		svg = d3.select(@$el[0]).append("svg")
+		svg = d3.select(@$el.find('.well')[0]).append("svg")
 		    .attr("width", width)
 		    .attr("height", height)
 		  .append("g")
