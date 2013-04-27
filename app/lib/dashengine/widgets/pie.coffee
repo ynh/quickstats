@@ -1,5 +1,6 @@
 Widget  = require 'lib/dashengine/widget'
 pietemplate  = require 'lib/dashengine/widgets/templates/pie'
+config = require 'config'
 
 module.exports = class Pie extends Widget
 	min_size:2
@@ -21,7 +22,7 @@ module.exports = class Pie extends Widget
 		color = d3.scale.category20()
 
 		pie = d3.layout.pie()
-		    .sort(null);
+		    .sort(null).value((d)->d.value);
 
 		arc = d3.svg.arc()
 		    .innerRadius((radius)*0.5)
@@ -33,9 +34,12 @@ module.exports = class Pie extends Widget
 		  .append("g")
 		    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
 
-		path = svg.selectAll("path")
-		    .data(pie(dataset.apples))
-		  .enter().append("path")
-		    .attr("fill", (d, i) -> return color(i))
-		    .attr("d", arc)
-		    .each((d)->this._current = d)
+		$.post "#{config.api.versionRoot}/handler/#{@item.dshandler}",
+			{settings:@item.datasource_settings},
+			(data) ->
+				path = svg.selectAll("path")
+				    .data(pie(data))
+				  .enter().append("path")
+				    .attr("fill", (d, i) -> return color(i))
+				    .attr("d", arc)
+				    .each((d)->this._current = d)

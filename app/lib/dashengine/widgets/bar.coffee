@@ -1,5 +1,6 @@
 Widget  = require 'lib/dashengine/widget'
 pietemplate  = require 'lib/dashengine/widgets/templates/pie'
+config = require 'config'
 module.exports = class Bar extends Widget
     min_size:6
 
@@ -7,7 +8,7 @@ module.exports = class Bar extends Widget
         super
         @template=pietemplate
 
-    run:->
+    run:-> 
         margin = {top: 20, right: 20, bottom: 30, left: 40}
         width = (@$el.width()-70)- margin.left - margin.right
         height = (@$el.width()-70)*0.55 - margin.top - margin.bottom
@@ -35,12 +36,14 @@ module.exports = class Bar extends Widget
           .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-        d3.tsv "data.tsv", (error, data)->
+        $.post "#{config.api.versionRoot}/handler/#{@item.dshandler}",
+          {settings:@item.datasource_settings},
+          (data) ->
             data.forEach (d)->
-                d.frequency = +d.frequency;
+                d.value = +d.value;
                 return
-            x.domain(data.map((d)->d.letter));
-            y.domain([0, d3.max(data, (d)-> return d.frequency)]);
+            x.domain(data.map((d)->d.key));
+            y.domain([0, d3.max(data, (d)-> return d.value)]);
 
             svg.append("g")
                   .attr("class", "x axis")
@@ -61,7 +64,7 @@ module.exports = class Bar extends Widget
                   .data(data)
                 .enter().append("rect")
                   .attr("class", "bar")
-                  .attr("x", (d)-> return x(d.letter))
+                  .attr("x", (d)-> return x(d.key))
                   .attr("width", x.rangeBand())
-                  .attr("y", (d)->return y(d.frequency))
-                  .attr("height",  (d)->  height - y(d.frequency) )
+                  .attr("y", (d)->return y(d.value))
+                  .attr("height",  (d)->  height - y(d.value) )
