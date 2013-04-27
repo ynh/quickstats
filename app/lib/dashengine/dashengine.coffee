@@ -1,13 +1,15 @@
 module.exports = class Dashengine
 	$el:null
-	widgets= []
+	widgets:[]
 	constructor:(element,data,@widgettypes,@datasources)->
 		@$el=element
 		@data=data
-		@widgets=[]
+		@widgets=[] 
 		for item in data
 			widget = require "lib/dashengine/widgets/#{item.wthandler}"
-			@widgets.push(new widget(item,@widgettypes,@datasources))
+			w = new widget(item,@widgettypes,@datasources)
+			w.parent = @
+			@widgets.push(w)
 		return
 
 	render:()->
@@ -18,6 +20,16 @@ module.exports = class Dashengine
 		for widget in @widgets
 			widget.run()
 		return
+
+	replace:(old,newdata)->
+		widget = require "lib/dashengine/widgets/#{newdata.wthandler}" 
+		old.$el.empty()
+		w = new widget(newdata,@widgettypes,@datasources,old.$el)
+		w.parent = @
+		@widgets.push(w)
+		w.render()
+		w.run()
+		$("#engine").trigger("ss-rearrange")
 
 
 	

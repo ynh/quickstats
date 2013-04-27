@@ -3,28 +3,28 @@ layoutedit = require 'views/templates/widgets/layoutedit'
 View = require 'views/base/view'
 config = require 'config'
 
-module.exports = class DatasourceEditView extends View
+module.exports = class WidgetSettingsView extends View
   template: template
   autoRender: yes
 
   initialize: ->
     super
-    @Datasources = @model.get('currentds')
+    @Widgettypes = @model.get('currentws')
     console.log @model
 
   render:()->
   	super
-  	@makeForm(@model.get('datasource_settings'),@$el)
+  	@makeForm(@model.get('settings'),@$el)
   saveData:()->
-    settings = @Datasources.settings
+    settings = @Widgettypes.settings
     data = {}
     for field in settings
       data[field.name]=@$el.find("""[name="#{field.name}"]""").val()
-    @model.set('datasource_settings',data,{silent: true})
+    @model.set('settings',data,{silent: true})
     return
 
   makeForm: ( data,el) ->
-    settings = @Datasources.settings
+    settings = @Widgettypes.settings
     el.data("form-settings",settings)
     compliedform=settings.map (setting)->
       setting.value= ""

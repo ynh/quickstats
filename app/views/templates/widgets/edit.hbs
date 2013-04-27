@@ -2,7 +2,7 @@
 	<div class="control-group">
 		<label for="Datasource" class="control-label">Datasource</label>
 		<div class="controls">
-			<select class="field" id="Datasource" data-name="Datasource">
+			<select class="field" id="Datasource" data-name="datasource_id">
 				{{#datasources}}
 				<option value="{{id}}" {{selected}}>{{name}}</option>
 				{{/datasources}}
@@ -13,19 +13,13 @@
 	<div class="control-group">
 		<label for="WidgetType" class="control-label">Widget Type</label>
 		<div class="controls">
-			<select class="field" id="WidgetType" data-name="WidgetType">
+			<select class="field" id="WidgetType" data-name="widgettype_id">
 				{{#widgettypes}}
 				<option value="{{id}}" {{selected}}>{{name}}</option>
 				{{/widgettypes}}
 			</select>
 		</div>
 
-	</div>
-	<div class="control-group nledit3 dep_redirect1">
-		<label for="wsettingssize" class="control-label">Widget Size</label>
-		<div class="controls">
-			<input type="text" id="wsettingssize" value="{{settings.size}}" class="field" data-name="url1" />
-		</div>
 	</div>
 	<div class="control-group nledit3 dep_redirect1"> 
 		<div class="controls">
@@ -35,7 +29,7 @@
 	</div>
 	<div class="control-group nledit3 dep_redirect1"> 
 		<div class="controls">
-			<buttton class="btn btn-success"><i class="icon-pencil"></i> Widget Settings</button>
+			<buttton class="btn btn-success wsedit"><i class="icon-pencil"></i> Widget Settings</button>
 			</div>
 		</div>
 

@@ -1,24 +1,20 @@
 ModalView = require 'views/base/modal'
 WidgetModel = require 'models/widget'
+config = require 'config'
+clone = (originalArray)->
+	$.map originalArray, (obj)->
+                      return $.extend(true, {}, obj)
+
 module.exports = class Widget
 	template:null
 	data:null
 	inEditMode:no
 	min_size:0
+	formsettings:[{type:'text','label':'Widget Size','name':'size'}]
 
-	constructor:(@item,@widgettypes,@datasources)->
-		try
-			@settings=jQuery.parseJSON(item.settings)
-		catch e
-			@settings={}
-			console.log e
+	constructor:(@item,@widgettypes,@datasources,@$el)->
+		@settings=@item.settings
 
-		try
-			@datasource_settings=jQuery.parseJSON(item.datasource_settings)
-		catch e
-			@datasource_settings={}
-			console.log e
-		
 		
 	render:->
 		console.log @
@@ -29,7 +25,7 @@ module.exports = class Widget
 
 		size = 2
 		if @settings?.size?
-			size = @settings.size
+			size = parseInt(@settings.size)
 		minsize= if @inEditMode then Math.max(6,@min_size) else @min_size
 		@$el.attr('data-ss-colspan',Math.max(size,minsize))
 		#@$el.addClass("widget well span#{size}")
@@ -48,10 +44,20 @@ module.exports = class Widget
 		@$el
 	run:->
 		false
+	reload:->
+		self=@
+		$.get "#{config.api.versionRoot}/widget/#{@item.id}",
+				(data) ->
+					self.parent.replace self,data
 	edit:->
 		WidgetsView = require 'views/widgets/edit'
-		data= _.extend({"datasources":@datasources,"widgettypes":@widgettypes,"settings":@settings,"datasource_settings":@datasource_settings}, @item)
-		new ModalView({ title:"Edit Widget",content: new WidgetsView({model:new WidgetModel(data)}) }).open();
+		data= _.extend({"datasources":clone(@datasources),"widgettypes":clone(@widgettypes),"settings":@settings,"datasource_settings":@datasource_settings}, @item)
+		view= new WidgetsView({model:new WidgetModel(data)});
+		self=@
+		view.update=()->
+			self.reload()
+
+		new ModalView({ title:"Edit Widget",content: view }).open();
 		return
 ###		@inEditMode=not @inEditMode
 		@render()
