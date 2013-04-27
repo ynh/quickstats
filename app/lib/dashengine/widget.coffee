@@ -5,7 +5,7 @@ module.exports = class Widget
 	inEditMode:no
 	min_size:0
 
-	constructor:(@item)->
+	constructor:(@item,@widgettypes,@datasources)->
 		try
 			@settings=jQuery.parseJSON(item.settings)
 		catch e
@@ -19,8 +19,6 @@ module.exports = class Widget
 			console.log e
 		
 		
-
-
 	render:->
 		console.log @
 		if not @$el?
@@ -41,7 +39,7 @@ module.exports = class Widget
 				@$el.append("No Template")
 		else
 			if @edittemplate?
-				@$el.append(@edittemplate(@item))
+				@$el.append(@edittemplate({"datasources":@datasources,"item":@item,"widgetypes":@widgettypes,"settings":@settings,"datasource_settings":@datasource_settings}))
 			else
 				@$el.append("No Edit Template")
 

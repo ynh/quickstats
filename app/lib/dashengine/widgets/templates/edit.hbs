@@ -1,10 +1,34 @@
 <div class="well form-horizontal">
-	<h4>Edit Widget</h4>
- <div class="control-group">
-                    <label for="Datasource" class="control-label">Datasource</label>
-                    <div class="controls">
-                        <input type="text" id="Datasource" value="{{datasource_id}}" class="field" data-name="datasource_id" />
-                    </div>
-                </div>
+	<h3 style="margin-top: -10px;">Edit Widget</h3>
+	<div class="control-group">
+		<label for="Datasource" class="control-label">Datasource</label>
+		<div class="controls">
+			<select class="field" id="Datasource" data-name="Datasource">
+				{{#datasources}}
+				<option value="{{id}}" {{selected}}>{{name}}</option>
+				{{/datasources}}
+			</select>
+		</div>
 
+	</div>
+		<div class="control-group">
+		<label for="WidgetType" class="control-label">Widget Type</label>
+		<div class="controls">
+			<select class="field" id="WidgetType" data-name="WidgetType">
+				{{#widgetypes}}
+				<option value="{{id}}" {{selected}}>{{name}}</option>
+				{{/widgetypes}}
+			</select>
+		</div>
+
+	</div>
+	<div class="control-group nledit3 dep_redirect1">
+                    <label for="wsettingssize" class="control-label">Widget Size</label>
+                    <div class="controls">
+                        <input type="text" id="wsettingssize" value="{{settings.size}}" class="field" data-name="url1" />
+                    </div>
+      </div>
+	<div class="widgetsettings">
+
+	</div>
 </div>
