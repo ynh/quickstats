@@ -1,6 +1,5 @@
 Widget  = require 'lib/dashengine/widget'
 pietemplate  = require 'lib/dashengine/widgets/templates/pie'
-edittemplate  = require 'lib/dashengine/widgets/templates/edit'
 
 module.exports = class Pie extends Widget
 	min_size:2
@@ -8,7 +7,6 @@ module.exports = class Pie extends Widget
 	constructor:(item)->
 		super
 		@template=pietemplate
-		@edittemplate=edittemplate
 
 	run:->
 		dataset = {

@@ -1,0 +1,43 @@
+<div class="form-horizontal"> 
+	<div class="control-group">
+		<label for="Datasource" class="control-label">Datasource</label>
+		<div class="controls">
+			<select class="field" id="Datasource" data-name="Datasource">
+				{{#datasources}}
+				<option value="{{id}}" {{selected}}>{{name}}</option>
+				{{/datasources}}
+			</select>
+		</div>
+
+	</div>
+	<div class="control-group">
+		<label for="WidgetType" class="control-label">Widget Type</label>
+		<div class="controls">
+			<select class="field" id="WidgetType" data-name="WidgetType">
+				{{#widgettypes}}
+				<option value="{{id}}" {{selected}}>{{name}}</option>
+				{{/widgettypes}}
+			</select>
+		</div>
+
+	</div>
+	<div class="control-group nledit3 dep_redirect1">
+		<label for="wsettingssize" class="control-label">Widget Size</label>
+		<div class="controls">
+			<input type="text" id="wsettingssize" value="{{settings.size}}" class="field" data-name="url1" />
+		</div>
+	</div>
+	<div class="control-group nledit3 dep_redirect1"> 
+		<div class="controls">
+			<buttton class="btn btn-success dsedit"><i class="icon-cloud-download"></i> Datasource Settings</button>
+		 
+		</div>
+	</div>
+	<div class="control-group nledit3 dep_redirect1"> 
+		<div class="controls">
+			<buttton class="btn btn-success"><i class="icon-pencil"></i> Widget Settings</button>
+			</div>
+		</div>
+
+	</div>
+</div> 

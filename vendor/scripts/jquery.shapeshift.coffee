@@ -468,6 +468,7 @@
           addClasses: false
           containment: 'document'
           handle: options.handle
+          distance: 20
           zIndex: 9999
 
           start: (e, ui) ->

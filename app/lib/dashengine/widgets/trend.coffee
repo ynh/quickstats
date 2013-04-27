@@ -8,6 +8,5 @@ module.exports = class Bar extends Widget
     constructor:(item)->
         super
         @template=template
-        @edittemplate=edittemplate
 
     run:->

@@ -1,14 +1,11 @@
 Widget  = require 'lib/dashengine/widget'
 pietemplate  = require 'lib/dashengine/widgets/templates/pie'
-edittemplate  = require 'lib/dashengine/widgets/templates/edit'
-
 module.exports = class Bar extends Widget
     min_size:6
 
     constructor:(item)->
         super
         @template=pietemplate
-        @edittemplate=edittemplate
 
     run:->
         margin = {top: 20, right: 20, bottom: 30, left: 40}

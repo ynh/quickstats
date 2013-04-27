@@ -1,6 +1,7 @@
+ModalView = require 'views/base/modal'
+WidgetModel = require 'models/widget'
 module.exports = class Widget
 	template:null
-	edittemplate:null
 	data:null
 	inEditMode:no
 	min_size:0
@@ -32,16 +33,11 @@ module.exports = class Widget
 		minsize= if @inEditMode then Math.max(6,@min_size) else @min_size
 		@$el.attr('data-ss-colspan',Math.max(size,minsize))
 		#@$el.addClass("widget well span#{size}")
-		if not @inEditMode
-			if @template?
-				@$el.append(@template(@item))
-			else
-				@$el.append("No Template")
+		if @template?
+			@$el.append(@template(@item))
 		else
-			if @edittemplate?
-				@$el.append(@edittemplate({"datasources":@datasources,"item":@item,"widgetypes":@widgettypes,"settings":@settings,"datasource_settings":@datasource_settings}))
-			else
-				@$el.append("No Edit Template")
+			@$el.append("No Template")
+		
 
 		if not @inEditMode
 			@$el.find(".well").prepend("""<a class="btn btn-success btn-small editbtn" ><i class="icon-pencil"></i> Edit</a>""")
@@ -50,15 +46,16 @@ module.exports = class Widget
 		self=@
 		@$el.find(".well").delegate '.editbtn','click', ()->self.edit()
 		@$el
-
+	run:->
+		false
 	edit:->
-		@inEditMode=not @inEditMode
+		WidgetsView = require 'views/widgets/edit'
+		data= _.extend({"datasources":@datasources,"widgettypes":@widgettypes,"settings":@settings,"datasource_settings":@datasource_settings}, @item)
+		new ModalView({ title:"Edit Widget",content: new WidgetsView({model:new WidgetModel(data)}) }).open();
+		return
+###		@inEditMode=not @inEditMode
 		@render()
 		if not @inEditMode
 			@run()
-		$("#engine").trigger("ss-rearrange")
+		$("#engine").trigger("ss-rearrange")###
 
-
-
-	run:->
-		false

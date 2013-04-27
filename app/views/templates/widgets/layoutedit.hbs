@@ -1,0 +1,30 @@
+<div class="form-horizontal"> 
+       {{#each fields}}
+       <div class="control-group">
+ {{#if text}}
+
+ <label class="control-label">{{label}}</label>
+<div class="controls">
+ <input type="text" name="{{name}}" placeholder="{{placeholder}}" value="{{value}}">
+</div>
+ {{/if}}
+  {{#if password}}
+
+ <label class="control-label">{{label}}</label>
+<div class="controls">
+ <input type="password" name="{{name}}" placeholder="{{placeholder}}" value="{{value}}">
+</div>
+ {{/if}}
+ {{#if textarea}}
+ <label class="control-label">{{label}}{{^label}}{{name}}{{/label}}</label>
+ <div class="controls">
+ <textarea type="text" name="{{name}}" placeholder="{{placeholder}}">{{value}}</textarea>
+</div>
+ {{/if}}
+ {{#if checkbox}}
+ <div>
+      <input style="float:left;margin-right:5px"  type="checkbox" name="{{name}}" id="box{{name}}" placeholder="{{placeholder}}" {{checked}}>
+      <label for="box{{name}}">{{label}}{{^label}}{{name}}{{/label}}</label></div>
+      {{/if}}
+      </div>
+      {{/each}}
