@@ -19,10 +19,5 @@ module.exports = class DashboardView extends PageView
     super
     @de.run() 
     @$el.find("#engine").shapeshift({
-        gutterX: 8,
-        gutterY: 5,
-        minColumns: 12,
-        colWidth:90,
-        paddingX: 0,
-        paddingY: 0
+        gutterY: 5
     })

@@ -1,11 +1,14 @@
 Widget  = require 'lib/dashengine/widget'
 pietemplate  = require 'lib/dashengine/widgets/templates/pie'
+edittemplate  = require 'lib/dashengine/widgets/templates/edit'
 
 module.exports = class Pie extends Widget
+	min_size:2
 
 	constructor:(item)->
 		super
 		@template=pietemplate
+		@edittemplate=edittemplate
 
 	run:->
 		dataset = {
@@ -13,8 +16,8 @@ module.exports = class Pie extends Widget
 		  oranges: [200, 200, 200, 200, 200]
 			}
 
-		width = @$el.width()-100
-		height = @$el.width()-100
+		width = (@$el.width()-70)*0.65
+		height = width
 		radius = Math.min(width, height) / 2;
 
 		color = d3.scale.category20()
